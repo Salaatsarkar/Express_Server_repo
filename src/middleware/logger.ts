@@ -3,7 +3,7 @@ import fs from "fs";
 
 const logger = async(req: Request , res : Response ,next : NextFunction) =>{
 
-    console.log("Method -> URL ->  Time :", req.method, req.url, Date.now ());
+    //console.log("Method -> URL ->  Time :", req.method, req.url, Date.now ());
 
     const log = `\nMethod : ${req.method} | URL : ${req.url} | Time : ${Date.now()}\n`;
 
