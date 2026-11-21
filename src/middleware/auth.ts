@@ -5,6 +5,9 @@ import { pool } from "../db";
 
 const auth = async(req : Request , res : Response , next : NextFunction) =>{
 
+    //console.log(req)
+
+
     console.log("This is Protected route");
     //console.log("headers",req.headers.authorization);
 
@@ -41,7 +44,11 @@ const auth = async(req : Request , res : Response , next : NextFunction) =>{
         })
     }
 
-    console.log(user)
+    req.user = decode;
+
+    //console.log(req.user)
+    console.log(req)
+    
 
     next();
 
