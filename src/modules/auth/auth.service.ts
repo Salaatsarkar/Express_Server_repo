@@ -30,7 +30,9 @@ const loginUserIntoDB = async (payload : authUserType) =>{
             email: userBody.email,
             age : userBody.age,
             phone : userBody.phone,
-            gender : userBody.gender
+            gender : userBody.gender,
+            is_active : userBody.is_active,
+            role : userBody.role
         }
    
 

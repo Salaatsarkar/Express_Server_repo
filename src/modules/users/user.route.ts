@@ -12,7 +12,7 @@ const router = Router();
 
     //*all user get from database in postman START
 
-    router.get('/', auth, userController.getAllUser)
+    router.get('/', auth("admin"), userController.getAllUser)
 
     //*all user get from database in postman END
 

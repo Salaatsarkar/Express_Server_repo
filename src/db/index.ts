@@ -22,6 +22,8 @@ export const pool = new Pool({
             password VARCHAR(255) NOT NULL,
             phone VARCHAR(20),
             age INTEGER,
+            is_active BOOLEAN DEFAULT true,
+            role VARCHAR(20) DEFAULT 'user',
             created_at TIMESTAMP DEFAULT NOW(),
             updated_at TIMESTAMP DEFAULT NOW()
             );
