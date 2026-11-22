@@ -2,12 +2,14 @@ import type { NextFunction, Request, Response } from "express";
 import jwt, { type JwtPayload } from "jsonwebtoken";
 import config from "../config";
 import { pool } from "../db";
+import type { Role } from "../types";
 
-const auth = (...roles : any) =>{
+const auth = (...roles : Role []) =>{
 
     return async(req : Request , res : Response , next : NextFunction) =>{
 
-    console.log(roles)
+    try {
+        console.log(roles)
 
 
     console.log("This is Protected route");
@@ -15,7 +17,7 @@ const auth = (...roles : any) =>{
 
     const token = req.headers.authorization;
     if(!token){
-        res.status(401).json({
+       return res.status(401).json({
             success : false,
             message : "Unauthorized Access !!"
         })
@@ -31,7 +33,7 @@ const auth = (...roles : any) =>{
         `,[decode.email])
 
     if(user.rowCount === 0){
-        res.status(404).json({
+       return res.status(404).json({
             success : false,
             message : "User Not Found"
         })
@@ -39,21 +41,32 @@ const auth = (...roles : any) =>{
 
     delete user.rows[0].password
 
-    if(!user.rows[0].age){
-        res.status(403).json({
+    if(!user.rows[0].is_active){
+       return res.status(403).json({
             success : false,
             message : "Forbidden"
         })
+    }
+
+    if(roles.length && !roles.includes(user.rows[0].role)){
+      return  res.status(401).json({
+            success : false,
+            message : "Unauthorized Access !!"
+        })
+
     }
 
     req.user = decode;
 
     console.log(req.user)
 
-    console.log(decode)
-    
+    //console.log(decode)
 
     next();
+
+    } catch (error) {
+        next(error);
+    }
 
 }
 }
