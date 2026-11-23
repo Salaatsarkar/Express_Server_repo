@@ -5,9 +5,22 @@ import { authRouter } from "./modules/auth/auth.route";
 
 import fs from "fs";
 import logger from "./middleware/logger";
+import { errorMonitor } from "events";
+import globalErrorHandler from "./middleware/globalErrorHandler";
+import cors from "cors";
 
 
 const app : Application = express()
+
+//*CORS ORIGIN START
+// Adds headers: Access-Control-Allow-Origin: *
+const corsOptions = {
+    origin : ['http://localhost:3000'],
+    optionsSuccessStatus : 200
+}
+app.use(cors(corsOptions))
+//*CORS ORIGIN END
+
 app.use(express.json());
  app.use(express.text());
  app.use(express.urlencoded({extended : true}))
@@ -102,5 +115,12 @@ app.get("/products", (req : Request,res : Response) =>{
 // });
 
 //! chatu Task end
+
+
+//? Global Error Handler START
+
+app.use(globalErrorHandler) ;
+
+//? Global Error Handler END
 
 export default app
