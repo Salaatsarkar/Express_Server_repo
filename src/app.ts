@@ -2,12 +2,12 @@ import express, { type Application, type NextFunction, type Request, type Respon
 import { userRoute } from "./modules/users/user.route";
 import { profileRoute } from "./modules/profile/profile.route";
 import { authRouter } from "./modules/auth/auth.route";
-
 import fs from "fs";
 import logger from "./middleware/logger";
 import { errorMonitor } from "events";
 import globalErrorHandler from "./middleware/globalErrorHandler";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 
 
 const app : Application = express()
@@ -20,6 +20,10 @@ const corsOptions = {
 }
 app.use(cors(corsOptions))
 //*CORS ORIGIN END
+
+//!cookie Middleware START
+app.use(cookieParser());
+//!cookie Middleware END
 
 app.use(express.json());
  app.use(express.text());

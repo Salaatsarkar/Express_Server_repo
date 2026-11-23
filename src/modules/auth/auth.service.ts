@@ -36,12 +36,17 @@ const loginUserIntoDB = async (payload : authUserType) =>{
         }
    
 
-    const accessToken = jwt.sign(jwtPayload , config.secret_key , {expiresIn : "1d"})
+    const accessToken = jwt.sign(jwtPayload , config.secret_key , {expiresIn : "1h"})
 
-    return {accessToken , user : user.rows[0]}
+    //! create Refresh Token START
+    const refreshToken = jwt.sign(jwtPayload , config.refresh_key , {expiresIn : "10d"})
+
+    //! create Refresh Token END
+
+    return {accessToken,refreshToken, user : user.rows[0]}
 
 
-        console.log(user.rows[0])
+       // console.log(user.rows[0])
 
 }
 
