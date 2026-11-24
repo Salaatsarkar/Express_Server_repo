@@ -38,15 +38,17 @@ const loginUser = async (req : Request , res : Response) =>{
 }
 
 //! Get Refresh Token in Server by Cookies and Create Access Token START
-const generateNewAccessToken = async (req: Request , res : Response) =>{
+const getRefreshToken = async (req: Request , res : Response) =>{
 
-    console.log(req.cookies.refreshToken)
+    //console.log(req.cookies.refreshToken);
+    const result = await authService.generateNewAccessToken(req.cookies.refreshToken);
 
 
     try {
          res.status(201).json({
             success : true,
-            message:"User Login Successfully !!", 
+            message:"Generate New Access Token Successfully !!", 
+            data : result
         })
         
     } catch (error : any) {
@@ -62,12 +64,11 @@ const generateNewAccessToken = async (req: Request , res : Response) =>{
 }
 
 
-
 //! Get Refresh Token in Server by Cookies  and Create Access Token END
 
 
 
 export const authController = {
     loginUser,
-    generateNewAccessToken
+    getRefreshToken
 }
